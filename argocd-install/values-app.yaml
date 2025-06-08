@@ -39,7 +39,7 @@ applications:
     additionalAnnotations: {}
     finalizers:
     - resources-finalizer.argocd.argoproj.io
-    project: platform
+    project: infra
     sources:
       - repoURL: https://github.com/rubentest/argocd-manifests.git
         targetRevision: main
