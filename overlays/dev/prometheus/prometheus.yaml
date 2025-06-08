@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
 spec:
   sources:
-    - repoURL: "https://gitlab.emobg.io/infrastructure/bcn-infra/argocd-apps.git"
+    - repoURL: "https://github.com/rubentest/argocd-manifests.git"
       targetRevision: main
       ref: values
     - repoURL: "https://prometheus-community.github.io/helm-charts"
