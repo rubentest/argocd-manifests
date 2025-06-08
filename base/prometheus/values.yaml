@@ -1,0 +1,26 @@
+server:
+  service:
+    enabled: true
+  persistentVolume:
+    size: 10Gi
+    annotations:
+      volume.kubernetes.io/storage-resizer: kubernetes.io/gce-pd
+    labels:
+      velero.io/schedule-name: velero-prometheus
+      velero.io/storage-location: default
+  resources:
+    requests:
+      cpu: 1
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 1Gi
+  strategy:
+    type: Recreate
+  retention: 30d
+  global:
+    scrape_timeout: 20s
+serverFiles:
+  prometheus.yml:
+    rule_files:
+      - /etc/config/*.rules
