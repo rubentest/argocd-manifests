@@ -1,0 +1,57 @@
+projects:
+  - name: infra
+    namespace: argocd
+    additionalLabels: {}
+    additionalAnnotations: {}
+    finalizers:
+    - resources-finalizer.argocd.argoproj.io
+    description: Infra project
+    sourceRepos:
+    - '*'
+    destinations:
+    - namespace: "*"
+      server: "*"
+    clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+    clusterResourceBlacklist:
+    - group: cilium.io
+      kind: CliliumIdentity
+    namespaceResourceBlacklist: []
+    namespaceResourceWhitelist: []
+    syncWindows:
+    - kind: allow
+      schedule: '* * * * *'
+      timeZone: UTC
+      duration: 30m
+      applications:
+      - '*'
+      #manualSync: true
+  #   signatureKeys:
+  #   - keyID: ABCDEF1234567890
+    sourceNamespaces:
+    - argocd
+
+applications:
+  - name: root-repo-argocd
+    namespace: argocd
+    additionalLabels: {}
+    additionalAnnotations: {}
+    finalizers:
+    - resources-finalizer.argocd.argoproj.io
+    project: platform
+    sources:
+      - repoURL: https://github.com/rubentest/argocd-manifests.git
+        targetRevision: main
+        path: overlays/dev
+        #directory:
+        #  recurse: false
+    destination:
+      server: https://kubernetes.default.svc
+      namespace: argocd
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+    ##revisionHistoryLimit: null
+
