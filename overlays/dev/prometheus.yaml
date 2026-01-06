@@ -14,3 +14,12 @@ spec:
       helm:
         valueFiles:
           - $values/base/prometheus/values.yaml
+        valuesObject:
+          server:
+            resources:
+              requests:
+                cpu: 1.5
+                memory: 2Gi
+              limits:
+                cpu: 1.5
+                memory: 2Gi
